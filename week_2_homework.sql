@@ -28,13 +28,21 @@ INSERT INTO instruments (name, category_id, description) VALUES ('Clarinet', 1, 
 -- All of the following queries can be completed with the tools learned in the "Week 2" class wiki.
 --
 -- 1. Write a query to find all of the inactive instruments.
+--      SELECT * FROM instruments WHERE active = 0;
 -- 2. Write a query to find all the queries with NULL descriptions.
+--      SELECT * FROM instruments WHERE description IS NULL;
 -- 3. Write a query to find all of the instruments belonging to category #3.
+--      SELECT * FROM instruments WHERE category_id = 3;
 -- 4. Write a query to find instruments that are inactive and also have NULL descriptions.
+--      SELECT * FROM instruments WHERE active = 0 AND description IS NULL;
 -- 5. Write a query to find instruments that have a NULL category_id or are inactive.
+--      SELECT * FROM instruments WHERE category_id IS NULL OR active = 0;
 -- 6. Write a query to find instruments with a created_at timestamp before April 1st, 2012.
+--      SELECT * FROM instruments WHERE created_at < '2012-04-01';
 -- 7. Write a query to find instruments with a created_at timestamp before April 1st 2012 and a NULL description.
+--      SELECT * FROM instruments WHERE created_at < '2012-04-01' AND description IS NULL;
 -- 8. Write a query to find instruments with a created_at timestamp in the month of Feburary 2012.
+--      SELECT * FROM instruments WHERE created_at > '2012-01-30' AND created_at < '2012-03-01';
   
 
 
@@ -57,7 +65,7 @@ INSERT INTO categories (name) VALUES ('Percussion');
 -- All of the following queries can be complete with the tools learned in our Joins section of the "Week 2" class wiki.
 --
 -- 1.  Write a query to return all of the Woodwind category data and all of the Instrument data for instruments belonging to the Woodwind category.
---
+--        SELECT * FROM instruments INNER JOIN categories ON (instruments.category_id = categories.id) WHERE categories.name = 'Woodwind';
 -- 2.  Write a query to return the Brass category name and Instrument id, name, and description for instruments belonging to the Brass category.
 --
 -- 3.  Write a query to return the String category id and name and Instrument id and name for instruments belonging to the String category.  Please make sure that the category.id column is named "Category ID", the category.name column is named 'Category NAME', the instrument.id columns is named 'Instrument ID', and the instrument.name column is named 'Instrument NAME'.

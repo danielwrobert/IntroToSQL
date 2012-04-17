@@ -48,6 +48,7 @@ SELECT * FROM foods WHERE short_description LIKE "%food";
 SELECT * FROM foods WHERE short_description LIKE "great%";
 -- short_description has the word "with" somewhere inside of it
 SELECT * FROM foods WHERE short_description LIKE "%with%";
+-- NOTE: LIKE is case insensitive. You couls use %With% and get same results
 
 
 
@@ -95,7 +96,7 @@ INSERT INTO authors_unique_key_2 (email, first_name, last_name) VALUES ('rob@win
 INSERT INTO authors_unique_key_2 (email, first_name, last_name) VALUES ('arya@winterfell.com', 'Arya', 'Stark');
 INSERT INTO authors_unique_key_2 (email, first_name, last_name) VALUES ('rob@yahoo.com', 'Rob', 'Stark');
 
-
+--NOTE: You can run SHOW CREATE TABLE [tablename]; for more info on that table (how it was created)
 
 -- Joining more than 2 tables
 
@@ -161,7 +162,8 @@ SELECT posts_week_3.title, posts_week_3.body, authors_week_3.first_name, authors
 FROM posts_week_3 INNER JOIN authors_week_3 ON (posts_week_3.author_id = authors_week_3.id)
   INNER JOIN comments ON (posts_week_3.id = comments.post_id)
 
-
+-- NOTE: You typically link a primary key from one table to a foreign key on another table during joins. To follow the convention
+--        you name the foreign key as table you are joining to followed by _id.
 
 
 -- sub queries
@@ -187,3 +189,15 @@ DELETE FROM posts_week_3;
 
 -- delete all posts by author #1
 DELETE FROM posts_week_3 WHERE author_id = 1
+
+
+
+
+-- CLASS TEST EXCERISE
+SELECT a.first_name, a.last_name, p.title, p.body, c.comment_text, p.created_at AS post_create_date,
+  c.created_at AS comment_create_date
+FROM authors_week_3 AS a INNER JOIN posts_week_3 AS p ON (a.id = p.author_id)
+  INNER JOIN comments AS c ON (p.id = c.post_id)
+WHERE c.comment_text LIKE "I%";
+
+

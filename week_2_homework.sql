@@ -42,7 +42,10 @@ INSERT INTO instruments (name, category_id, description) VALUES ('Clarinet', 1, 
 -- 7. Write a query to find instruments with a created_at timestamp before April 1st 2012 and a NULL description.
 --      SELECT * FROM instruments WHERE created_at < '2012-04-01' AND description IS NULL;
 -- 8. Write a query to find instruments with a created_at timestamp in the month of Feburary 2012.
---      SELECT * FROM instruments WHERE created_at > '2012-01-30' AND created_at < '2012-03-01';
+--      SELECT * FROM instruments WHERE created_at > '2012-01-31' AND created_at < '2012-03-01';
+-- Option 2: SELECT * FROM instruments WHERE created_at BETWEEN '2012-02-01' AND '2012-02-28';
+-- NOTE: Because it is a TIMESTAMP, it will include that day in the query (even though you may be using > or <) - What happens is
+--        the query takes everythign after or before that second (00:00:00).
   
 
 
@@ -66,13 +69,39 @@ INSERT INTO categories (name) VALUES ('Percussion');
 --
 -- 1.  Write a query to return all of the Woodwind category data and all of the Instrument data for instruments belonging to the Woodwind category.
 --        SELECT * FROM instruments INNER JOIN categories ON (instruments.category_id = categories.id) WHERE categories.name = 'Woodwind';
+
+-- Option 2:  SELECT instruments.*, categories.*
+--            FROM instruments INNER JOIN categories ON (instruments.category_id = categories.id)
+--            WHERE categories.name = 'Woodwind';
+
 -- 2.  Write a query to return the Brass category name and Instrument id, name, and description for instruments belonging to the Brass category.
---
+--        SELECT categories.name, instruments.id, instruments.name, instruments.description
+--        FROM instruments INNER JOIN categories ON (instruments.category_id = categories.id) 
+--        WHERE categories.name = 'Brass';
+
 -- 3.  Write a query to return the String category id and name and Instrument id and name for instruments belonging to the String category.  Please make sure that the category.id column is named "Category ID", the category.name column is named 'Category NAME', the instrument.id columns is named 'Instrument ID', and the instrument.name column is named 'Instrument NAME'.
---
+--        SELECT category.id AS "Category ID", category.name AS "Category NAME",
+--          instruments.id AS "Instrument ID", instruments.name AS "Instrument NAME"
+--        FROM instruments INNER JOIN categories ON (instruments.category_id = categories.id) 
+--        WHERE categories.name = 'Strings';
+
 -- 4.  Write a query to return the Woodwind category name and Instrument id and name for all active instruments that belong to the Woodwind category.
 --
+--
+--
+
 -- 5.  Write a query to return the Woodwind category name and Instrument id and name for instruments with NULL descriptions that belong to the Woodwind category.
 --
--- 6.  Write a query to return the String category name and Instrument id and name for instruments with a created_at timestamps in the month of Feburary that belong to the String category.
+--
+--
 
+-- 6.  Write a query to return the String category name and Instrument id and name for instruments with a created_at timestamps in the month of Feburary that belong to the String category.
+--        SELECT category.name AS "Category NAME", instruments.id AS "Instrument ID", instruments.name AS "Instrument NAME"
+--        FROM instruments INNER JOIN categories ON (instruments.category_id = categories.id)
+--        WHERE categories.name = 'Strings';
+--        AND instruments.created_at > '2012-02-01' AND instruments.created_at < '2012-03-01';
+
+
+-- NOTE: To drop a table, syntax is DROP TABLE [tablename]; (I assume DROP DATABASE [databasename] works as well)
+--        Also, to execute all of the SQL commands in a file, syntax is SOURCE filename.sql;
+--        UNIX - escape a space with a backslash (eg: folder MY Docs use cd MY\ Docs)

@@ -26,7 +26,9 @@ SELECT * FROM purchases ORDER BY price ASC;
 SELECT * FROM purchases ORDER BY price DESC;
 
 -- LIMIT revisted
-SELECT * FROM purchases ORDER BY price DESC LIMIT 4,3;
+-- Pagination - You want to paginate at the database level for 
+--    much better performance (especially on large collections)
+SELECT * FROM purchases ORDER BY price DESC LIMIT 4,4;
 
 -- aggregate functions
 -- basic COUNT

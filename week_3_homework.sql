@@ -60,10 +60,45 @@ INSERT INTO order_items (order_id, name) VALUES (6, 'Candle Stand');
 
 -- Excersizes:
 -- 1. Query an order for every customer.  Here is what we need:  Email, First Name, Last Name, Order Description, All Order Item Names.  We must know which Order Items belong to which Customer.
+
+SELECT c.email, c.first_name, c.last_name, o.short_desc AS "Order Description", oi.name
+FROM customers c INNER JOIN orders o ON (c.id = o.customer_id)
+  INNER JOIN order_items oi ON (o.id = oi.order_id)
+
+
 -- 2.  Repeat step one, but we only want the Order and Order Items for Rob Stark.
+
+SELECT c.email, c.first_name, c.last_name, o.short_desc AS "Order Description", oi.name
+FROM customers c INNER JOIN orders o ON (c.id = o.customer_id)
+  INNER JOIN order_items oi ON (o.id = oi.order_id)
+WHERE c.email = "rob@winterfell.com";
+
+
 -- 3.  Query the Order Names and all Order Items for all 'Lanister' orders.  We do not need any customer information.
+
+SELECT o.short_desc "Order Name", oi.name "Order Item"
+FROM customers c INNER JOIN orders o ON (c.id = o.customer_id)
+  INNER JOIN order_items oi ON (o.id = oi.order_id)
+WHERE c.last_name = "Lanister";
+
+
 -- 4.  Find the Email, First Name, Last Name, Order Description, All Order Item Names for all orders that did NOT come from the customers with '@winterfell.com' or '@lanister.com'.
+
+SELECT c.email, c.first_name, c.last_name, o.short_desc AS "Order Description", oi.name
+FROM customers c INNER JOIN orders o ON (c.id = o.customer_id)
+  INNER JOIN order_items oi ON (o.id = oi.order_id)
+WHERE c.email NOT LIKE "%@winterfell.com" AND c.email NOT LIKE "%@lanister.com";
+-- OR YOU CAN DO a sub-query for your WHERE statement: 
+  WHERE c.id NOT IN (SELECT id FROM customers WHERE email LIKE "%@winterfell.com" OR email LIKE "%@lanister.com");
+
+
 -- 5. Find all of the Order Items only for Tyrion Lanister's "Shoe Products" order.  Assume that you do not have access to order.id here.  Hint:  Scope your query using the order.short_desc
+
+SELECT oi.name
+FROM customers c INNER JOIN orders o ON (c.id = o.customer_id)
+  INNER JOIN order_items oi ON (o.id = oi.order_id)
+WHERE c.email = "tyrion@lanister.com" AND o.short_desc = "Shoe Products";
+
 
 -- Extra Credit:  Come up with some of your own queries!  Play around with joining 2 tables, then add the third.
 

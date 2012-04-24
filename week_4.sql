@@ -104,6 +104,28 @@ FROM posts_week_4 INNER JOIN posts_labels ON (posts_week_4.id = posts_labels.pos
   INNER JOIN labels ON (posts_labels.label_id = labels.id)
 WHERE posts_week_4.id = 1;
 
+
+-- all funny posts
+SELECT p.*, l.name
+FROM posts_week_4 p INNER JOIN posts_labels pl ON (p.id = pl.post_id)
+  INNER JOIN labels l ON (l.id = pl.label_id)
+WHERE l.id = 3;
+-- OR: WHERE l.name = "funny";
+
+
+-- all whining posts
+SELECT l.name
+FROM posts_week_4 p INNER JOIN posts_labels pl ON (p.id = pl.post_id)
+  INNER JOIN labels l ON (l.id = pl.label_id)
+WHERE p.id = 6;
+
+
+-- using aggrigate functions
+SELECT l.name
+FROM posts_week_4 p INNER JOIN posts_labels pl ON (p.id = pl.post_id)
+  INNER JOIN labels l ON (l.id = pl.label_id)
+
+
 -- all posts labeled as funny
 SELECT posts_week_4.title, posts_week_4.body, labels.name AS label_name 
 FROM posts_week_4 INNER JOIN posts_labels ON (posts_week_4.id = posts_labels.post_id)

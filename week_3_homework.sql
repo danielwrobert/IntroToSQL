@@ -104,3 +104,32 @@ WHERE c.email = "tyrion@lanister.com" AND o.short_desc = "Shoe Products";
 
 
 
+
+-- EXTRA IN CLASS ASSIGNMENT
+CREATE TABLE labels2 (
+  id INT(11) AUTO_INCREMENT,
+  name VARCHAR(255),
+  PRIMARY KEY(id)
+);
+INSERT INTO labels2 (name) VALUES ('fun');
+INSERT INTO labels2 (name) VALUES ('extensive');
+
+CREATE TABLE orders_labels2 (
+  labels2_id INT(11),
+  orders_id INT(11),
+  UNIQUE KEY(labels2_id, orders_id)
+);
+-- **ORDERS TABLE FROM ABOVE**
+
+INSERT INTO orders_labels2 (labels2_id, orders_id) VALUES (1,1);
+INSERT INTO orders_labels2 (labels2_id, orders_id) VALUES (2,1);
+
+-- FIND ALL LABELS ATTACHED TO ORDER #1
+SELECT o.id 'Order ID', o.short_desc, l.id 'Label ID', l.name
+FROM orders o INNER JOIN orders_labels2 ol ON (o.id = ol.orders_id)
+  INNER JOIN labels2 l ON (l.id = ol.labels2_id)
+WHERE o.id = 1;
+
+
+
+

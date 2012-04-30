@@ -1,14 +1,31 @@
+-- EXAMPLE QUERY:
+SELECT posts_week_4.title, posts_week_4.body, labels.name AS label_name 
+FROM posts_week_4 INNER JOIN posts_labels ON (posts_week_4.id = posts_labels.post_id)
+  INNER JOIN labels ON (posts_labels.label_id = labels.id)
+WHERE labels.name = 'funny';
+
 -- This week please use the data_set.sql for your homework data.
 
 -- 1.  Find the oldest age among all of our employees.
+SELECT MAX(age) FROM employees;
 
 -- 2.  Write a query that returns the number of employees that work at 'Lynch-Windler' company.  The query must return a number.  You cannot manually count rows to get this answer.
+SELECT COUNT(employees.id)
+FROM employees INNER JOIN companies ON (employees.company_id = companies.id)
+WHERE companies.name = 'Lynch-Windler';
 
 -- 3.  Write a query that returns the combined age of all employees that work at 'Batz LLC' company.  The query must return a number.
+SELECT SUM(employees.age)
+FROM employees INNER JOIN companies ON (employees.company_id = companies.id)
+WHERE companies.name = 'Batz LLC';
 
 -- 4.  We have a catalog that lists our employees (last_name, first_name) by alphabetical order of the last name.  It also lists 10 employees per page.  Write a query that would return the employees that would be listed on page 3 of this catalog.
+SELECT employees.first_name, employees.last_name
+FROM employees ORDER BY last_name ASC
+	LIMIT 30, 10;
 
 -- 5.  Create the following 2 resource tables blog_posts and tags.  Give them a many to many relationship using an intersection table.  You will need a total of 3 tables to accomplish this task.  Create a few blog_posts and tags with INSERT INTO statements.  Create a few relationships between your blog_posts and tags by inserting data into your intersection table.  Write a query fetching all the blog_posts and their related tags.
+
 
 -- 6.  Write a query that will find employees id, first name, last name and all skill names for the first 10 employees that have skills.
 

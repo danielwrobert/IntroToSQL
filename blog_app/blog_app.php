@@ -7,21 +7,21 @@
 // helper function to insert post row
 function create_post($user_id, $title, $body){
   // TODO:
-  $result = mysql_query("");
+  $result = mysql_query("INSERT INTO posts (user_id, title, body) VALUES ($user_id, \"$title\", \"$body\")");
   return $result;
 }
 
 // helper function to insert comment row
 function create_comment($post_id, $body){
   // TODO: 
-  $result = mysql_query("");
+  $result = mysql_query("INSERT INTO comments (post_id, body) VALUES ($post_id, \"$body\")");
   return $result;
 }
 
 // helper function to insert posts_labels row
 function create_post_label($post_id, $label_id){
   // TODO:
-  $result = mysql_query("");
+  $result = mysql_query("INSERT INTO posts_labels (post_id, label_id) VALUES ($post_id, $label_id)");
   return $result;
 }
 
@@ -30,11 +30,12 @@ function create_post_label($post_id, $label_id){
 $db_conn = mysql_connect(':/Applications/MAMP/tmp/mysql/mysql.sock', 'root', 'root'); 
 mysql_select_db('blog_app', $db_conn);
 
-// var_dump('POST: action: ' . $_POST['action'] . 'body: ' . $_POST['body'] . ' ' . 'title: ' . $_POST['title'] . ' ' . 'user_id: ' . $_POST['user_id']);
+// Dumps post array onto page for error checking
+var_dump('POST: action: ' . $_POST['action'] . 'body: ' . $_POST['body'] . ' ' . 'title: ' . $_POST['title'] . ' ' . 'user_id: ' . $_POST['user_id']);
 
 // all users
 // TODO:
-$all_users_res = mysql_query("");
+$all_users_res = mysql_query("SELECT * FROM users ORDER BY last_name");
 
 // process action
 if($_POST['action'] && $_POST['action'] == 'add_post'){
@@ -50,22 +51,22 @@ else if($_POST['action'] && $_POST['action'] == 'add_label'){
 // fetch user data
 $user_id = $_REQUEST['user_id'] ;
 // TODO:
-$user_res = mysql_query(""); 
+$user_res = mysql_query("SELECT * FROM users WHERE users.id = $user_id"); 
 $user_data = mysql_fetch_assoc($user_res);
 
 // fetch user posts
 // TODO:
-$posts_res = mysql_query("");
+$posts_res = mysql_query("SELECT * FROM posts WHERE posts.user_id = $user_id");
 
-$num_posts_res = mysql_query("");
+$num_posts_res = mysql_query("SELECT COUNT(*) FROM posts WHERE posts.user_id = $user_id");
 $num_posts = mysql_fetch_array($num_posts_res);
 $num_posts = $num_posts[0];
 
 
 // TODO:              
-$comments_query = <<<END
+//$comments_query = <<<END
   
-END;
+//END;
 
 ?>
 
@@ -120,7 +121,7 @@ END;
                 <div class="inner-content"><?php echo $post['body']; ?></div>
                 <?php 
                    // TODO:
-                   $labels_query = "";
+                   $labels_query = "SELECT l.name FROM labels.l INNER JOIN posts_labels pl ON (l.id = pl.label_id) INNER JOIN posts p ON (p.id = pl.post_id) WHERE p.id = {$post['id']}";
                     $labels_res = mysql_query($labels_query); 
                 ?>
                 <?php if(mysql_num_rows($labels_res) > 0){ ?>
@@ -147,7 +148,7 @@ END;
                 </div>
                 <?php 
                       // TODO:
-                      $comments_query = "";
+                      $comments_query = "SELECT c.body FROM comments c INNER JOIN posts p ON (p.id = pl.post_id) WHERE p.id = {$post['id']}";
                       $comments_res = mysql_query($comments_query); 
                 ?>
                 <?php if(mysql_num_rows($comments_res) > 0){ ?>
